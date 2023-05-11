@@ -20,6 +20,8 @@ model User {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   Comment   Comment[]
+
+  @@map("user") //映射到資料表名稱
 }
 
 // 設定文章資料表
@@ -35,6 +37,8 @@ model Post {
   comments   Comment[] // 文章評論
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+
+  @@map("post")
 }
 
 // 設定評論資料表
@@ -47,6 +51,8 @@ model Comment {
   author    User     @relation(fields: [authorId], references: [id])
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("comment")
 }
 
 // 設定分類資料表
@@ -57,6 +63,8 @@ model Category {
   posts     Post[] // 分類下的文章
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("category")
 }
 
 // 設定標籤資料表
@@ -67,6 +75,8 @@ model Tag {
   posts     Post[] // 標籤下的文章
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@map("tag")
 }
 
 // 定義使用者角色
