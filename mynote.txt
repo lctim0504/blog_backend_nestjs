@@ -12,9 +12,9 @@ npx prisma init
 npx prisma migrate dev
 npx prisma generate
 npx prisma studio
-nest g module comment --no-spec 
-nest g service comment --no-spec   
-nest g controller comment --no-spec
+nest g module tag --no-spec 
+nest g service tag --no-spec   
+nest g controller tag --no-spec
 npm i --save class-validator class-transformer
 npm i argon2
 npm i @nestjs/config
