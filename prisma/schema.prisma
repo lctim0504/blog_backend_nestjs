@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// 設定使用者資料表
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  password  String
+  role      UserRole  @default(USER)
+  posts     Post[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Comment   Comment[]
+}
+
+// 設定文章資料表
+model Post {
+  id         Int        @id @default(autoincrement())
+  title      String
+  content    String?
+  status     PostStatus @default(DRAFT)
+  authorId   Int
+  author     User       @relation(fields: [authorId], references: [id])
+  categories Category[] // 文章分類
+  tags       Tag[] // 文章標籤
+  comments   Comment[] // 文章評論
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+// 設定評論資料表
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  authorId  Int
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 設定分類資料表
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  posts     Post[] // 分類下的文章
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 設定標籤資料表
+model Tag {
+  id        Int      @id @default(autoincrement())
+  name      String
+  slug      String   @unique
+  posts     Post[] // 標籤下的文章
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// 定義使用者角色
+enum UserRole {
+  USER
+  ADMIN
+}
+
+// 定義文章狀態
+enum PostStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
