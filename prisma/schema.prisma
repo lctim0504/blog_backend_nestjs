@@ -33,12 +33,24 @@ model Post {
   authorId   Int
   author     User       @relation(fields: [authorId], references: [id])
   categories Category[] // 文章分類
-  tags       Tag[] // 文章標籤
-  comments   Comment[] // 文章評論
+  tags       Tag[]      // 文章標籤
+  comments   Comment[]  // 文章評論
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  images     PostImage[] // 文章圖片
 
   @@map("post")
+}
+
+model PostImage {
+  id        Int      @id @default(autoincrement())
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  imageUrl  String   // 圖片 URL
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("post_image")
 }
 
 // 設定評論資料表

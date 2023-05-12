@@ -6,6 +6,7 @@ import { ArticleModule } from './article/article.module';
 import { CommentModule } from './comment/comment.module';
 import { CategoryModule } from './category/category.module';
 import { TagModule } from './tag/tag.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { TagModule } from './tag/tag.module';
     CommentModule,
     CategoryModule,
     TagModule,
+    ImageModule,
   ],
 })
 
