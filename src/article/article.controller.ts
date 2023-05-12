@@ -1,12 +1,21 @@
-import { Param, Body, Controller, Get, Post, Delete, ParseIntPipe } from '@nestjs/common';
+import { Query, Param, Body, Controller, Get, Post, Delete, ParseIntPipe, ParseBoolPipe } from '@nestjs/common';
 import { ArticleService } from './article.service';
-import { CreatePostDto } from './dto/article.dto';
-import { CreateCommentDto } from './dto';
+import { CreateCommentDto, CreatePostDto } from './dto';
+import { FilterPostDto } from './dto/filter.dto';
 
-@Controller('article')
+
+
+@Controller('articles')
 export class ArticleController {
     constructor(private articleService: ArticleService) { }
 
+    //取得文章列表
+    @Get()
+    getAllArticlesBy(
+        @Query() filterPostDto: FilterPostDto,
+    ) {
+        return this.articleService.getAllArticlesBy(filterPostDto);
+    }
     //取得文章列表
     @Get()
     getAllArticles() {

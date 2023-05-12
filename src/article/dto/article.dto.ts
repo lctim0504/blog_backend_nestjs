@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString, IsEnum, ArrayNotEmpty, ArrayMinSize } from 'class-validator';
+import { Type } from 'class-transformer';
+import { IsNotEmpty, IsString, IsEnum, ArrayNotEmpty, ArrayMinSize, IsOptional, IsDate, IsNumber, IsEmail, isEmail } from 'class-validator';
 
 enum PostStatus {
     DRAFT = 'DRAFT',
@@ -18,6 +19,7 @@ export class CreatePostDto {
     status: PostStatus;
 
     @IsNotEmpty()
+    @Type(() => Number)
     authorId: number;
 
     @ArrayNotEmpty()

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PostStatus } from '@prisma/client';
 import { CreateCommentDto } from 'src/article/dto';
+import { SearchCommentDto } from './dto/comment.dto';
 
 @Injectable()
 export class CommentService {
@@ -10,8 +11,12 @@ export class CommentService {
     async getAllComments() {
         return await this.prisma.comment.findMany({});
     }
-    async getCommentsByPost(id: number) {
+    async getCommentsById(id: number) {
         return await this.prisma.comment.findUnique({ where: { id } });
+    }
+    async getCommentsBy(findCommentDto: SearchCommentDto) {
+        const { authorId, postId } = findCommentDto;
+        return await this.prisma.comment.findMany({ where: { authorId, postId } });
     }
     async updateComment(id: number, dto: CreateCommentDto) {
         return await this.prisma.comment.update({
